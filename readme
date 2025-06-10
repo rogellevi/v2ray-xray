@@ -1,0 +1,12 @@
+paso 1
+apt install python3-pip
+paso2
+pip install v2ray-util
+paso3
+
+v2ray
+source <(curl -sL https://multi.netlify.app/v2ray.sh)
+xray
+source <(curl -sL https://multi.netlify.app/xray.sh)
+Desinstalar
+source <(curl -sL https://multi.netlify.app/v2ray.sh) --remove
