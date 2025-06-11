@@ -1,3 +1,9 @@
+Instalacion Automatico
+
+wget https://raw.githubusercontent.com/rogellevi/v2ray-xray/master/instalarv2.sh && chmod +x instalarv2.sh && ./instalarv2.sh
+
+
+
 paso 1
 apt install python3-pip
 paso2
