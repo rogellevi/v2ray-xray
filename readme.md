@@ -1,4 +1,4 @@
-Instalacion Automatizada.
+## Instalacion Automatizada.
 
 ```
 wget https://raw.githubusercontent.com/rogellevi/v2ray-xray/master/instalarv2.sh && chmod +x instalarv2.sh && ./instalarv2.sh
@@ -6,6 +6,15 @@ wget https://raw.githubusercontent.com/rogellevi/v2ray-xray/master/instalarv2.sh
 ## Feature
 - Support Xray manage, different commands (v2ray/xray) enter different core management
 
+
+## Instalacion Automatizada 2
+```
+wget https://raw.githubusercontent.com/rogellevi/v2ray-xray/master/installer2.sh && chmod +x installer2.sh && ./installer2.sh
+```
+## Comando para Desinstalar
+```
+sudo ./installer2.sh --uninstall
+```
 
 ## Instalacion Manual
 
