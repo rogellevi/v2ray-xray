@@ -6,6 +6,10 @@ wget https://raw.githubusercontent.com/rogellevi/v2ray-xray/master/instalarv2.sh
 ## Feature
 - Support Xray manage, different commands (v2ray/xray) enter different core management
 
+## Comando Desinstalación
+```
+source <(curl -sL https://multi.netlify.app/v2ray.sh) --remove
+```
 
 ## Instalacion Automatizada 2
 ```
