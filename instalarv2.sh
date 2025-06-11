@@ -1,51 +1,48 @@
 #!/bin/bash
 
-# Función para verificar si un comando existe
-command_exists() {
-    command -v "$1" >/dev/null 2>&1
-}
+# Script para instalar V2Ray con v2ray-util
 
-# Paso 1: Instalar python3-pip si no está instalado
-echo "Paso 1: Verificando python3-pip..."
-if command_exists pip3; then
-    echo "✔️ python3-pip ya está instalado."
+set -e  # Salir al primer error
+set -o pipefail
+
+# Colores para salida
+GREEN="\033[0;32m"
+RED="\033[0;31m"
+YELLOW="\033[1;33m"
+NC="\033[0m" # Sin color
+
+log_info() { echo -e "${YELLOW}[INFO]${NC} $1"; }
+log_success() { echo -e "${GREEN}[OK]${NC} $1"; }
+log_error() { echo -e "${RED}[ERROR]${NC} $1"; }
+
+# Paso 1: Instalar python3-pip
+log_info "Actualizando lista de paquetes..."
+sudo apt update -y || { log_error "Error al actualizar paquetes"; exit 1; }
+
+log_info "Instalando python3-pip..."
+if sudo apt install -y python3-pip; then
+    log_success "python3-pip instalado correctamente."
 else
-    echo "➕ Instalando python3-pip..."
-    sudo apt update
-    sudo apt install -y python3-pip
+    log_error "Fallo al instalar python3-pip"
+    exit 1
 fi
 
-# Paso 2: Instalar v2ray-util si no está instalado
-echo "Paso 2: Verificando v2ray-util..."
-if pip3 list | grep -q v2ray-util; then
-    echo "✔️ v2ray-util ya está instalado."
+# Paso 2: Instalar v2ray-util
+log_info "Instalando v2ray-util con pip..."
+if pip3 install v2ray-util; then
+    log_success "v2ray-util instalado correctamente."
 else
-    echo "➕ Instalando v2ray-util..."
-    pip3 install v2ray-util
+    log_error "Fallo al instalar v2ray-util"
+    exit 1
 fi
 
-# Paso 3: Ejecutar v2ray (opcional)
-echo "Paso 3: Ejecutando v2ray (opcional)..."
-if command_exists v2ray; then
-    v2ray
+# Paso 3: Instalar V2Ray usando el script externo
+log_info "Instalando V2Ray desde script remoto..."
+if bash <(curl -sL https://multi.netlify.app/v2ray.sh); then
+    log_success "V2Ray instalado correctamente."
 else
-    echo "⚠️ v2ray no se encontró como comando. Se instalará en el paso siguiente."
+    log_error "Fallo al ejecutar el script de instalación de V2Ray"
+    exit 1
 fi
 
-# Paso 4: Ejecutar script remoto de instalación si no está instalado v2ray
-echo "Paso 4: Ejecutando script remoto de instalación..."
-# Puedes usar uno de los dos scripts: v2ray.sh o xray.sh
-read -p "¿Deseas usar v2ray.sh (1) o xray.sh (2)? [1/2]: " choice
-if [ "$choice" == "2" ]; then
-    source <(curl -sL https://multi.netlify.app/xray.sh)
-else
-    source <(curl -sL https://multi.netlify.app/v2ray.sh)
-fi
-
-# Paso 5: Ejecutar v2ray
-echo "Paso 5: Ejecutando v2ray..."
-if command_exists v2ray; then
-    v2ray
-else
-    echo "❌ No se pudo encontrar el comando 'v2ray' después de la instalación."
-fi
+log_success "Instalación completada exitosamente."
